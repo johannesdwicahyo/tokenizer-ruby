@@ -1,0 +1,11 @@
+CLAUDE.md
+/.bundle/
+/target/
+/tmp/
+/pkg/
+*.bundle
+*.so
+*.dylib
+*.gem
+Gemfile.lock
+Cargo.lock

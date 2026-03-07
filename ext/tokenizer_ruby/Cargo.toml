@@ -1,0 +1,12 @@
+[package]
+name = "tokenizer_ruby"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+magnus = "0.7"
+tokenizers = { version = "0.21", features = ["http"] }
