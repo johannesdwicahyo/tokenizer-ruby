@@ -110,4 +110,51 @@ class TestTokenizer < Minitest::Test
       assert_includes [0, 1], mask
     end
   end
+
+  def test_new_with_path
+    mock_inner = Minitest::Mock.new
+    TokenizerRuby::InternalTokenizer.stub(:from_file, mock_inner) do
+      tokenizer = TokenizerRuby::Tokenizer.new("/some/path/tokenizer.json")
+      assert_instance_of TokenizerRuby::Tokenizer, tokenizer
+    end
+  end
+
+  def test_encode_nil_raises_error
+    assert_raises(TokenizerRuby::Error) do
+      @tokenizer.encode(nil)
+    end
+  end
+
+  def test_encode_non_string_raises_error
+    assert_raises(TokenizerRuby::Error) do
+      @tokenizer.encode(123)
+    end
+  end
+
+  def test_decode_non_array_raises_error
+    assert_raises(TokenizerRuby::Error) do
+      @tokenizer.decode("not array")
+    end
+  end
+
+  def test_truncate_negative_max_tokens_raises
+    assert_raises(TokenizerRuby::Error) do
+      @tokenizer.truncate("hi", max_tokens: -1)
+    end
+  end
+
+  def test_encoding_has_type_ids_attribute
+    encoding = @tokenizer.encode("Hello")
+    assert_respond_to encoding, :type_ids
+  end
+
+  def test_encoding_has_special_tokens_mask
+    encoding = @tokenizer.encode("Hello")
+    assert_respond_to encoding, :special_tokens_mask
+  end
+
+  def test_encoding_has_word_ids
+    encoding = @tokenizer.encode("Hello")
+    assert_respond_to encoding, :word_ids
+  end
 end
