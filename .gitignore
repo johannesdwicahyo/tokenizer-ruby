@@ -9,3 +9,4 @@ CLAUDE.md
 *.gem
 Gemfile.lock
 Cargo.lock
+.claude/
