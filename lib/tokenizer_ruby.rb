@@ -13,4 +13,7 @@ end
 
 module TokenizerRuby
   class Error < StandardError; end
+  class TokenizationError < Error; end
+  class FileNotFoundError < Error; end
+  class ConfigurationError < Error; end
 end
